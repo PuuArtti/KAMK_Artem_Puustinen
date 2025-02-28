@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MyMenuScript : MonoBehaviour
 {
@@ -13,4 +14,12 @@ public class MyMenuScript : MonoBehaviour
     {
         
     }
+
+    public void GoToLevel(int levelNumber)
+    {
+
+        SceneManager.LoadScene(levelNumber);
+
+    }
+
 }
