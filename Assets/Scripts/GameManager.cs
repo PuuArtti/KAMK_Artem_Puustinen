@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {//Variables
@@ -13,12 +14,21 @@ public class GameManager : MonoBehaviour
     public GameObject scoreUI;
     public GameObject HiScoreUI;
     public GameObject LivesUI;
+    public GameObject RetryButton;
+    public GameObject QuitButtonUI;
+    public GameObject GameOverText;
 
     public GameObject Ball;
 
     public GameObject[] ballsInGame;
     public int newBallScore;
 
+    private void Awake()
+    {
+        RetryButton.SetActive(false);
+        QuitButtonUI.SetActive(false);
+        GameOverText.SetActive(false);
+    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -69,6 +79,24 @@ public class GameManager : MonoBehaviour
 
         }
     }
+
+    public void Retry() 
+    {
+        lives = 3;
+        score = 0;
+        RetryButton.SetActive(false);
+        SpawnBall();
+        scoreUI.GetComponent<TextMeshProUGUI>().text = "Score:" + score.ToString();
+        LivesUI.GetComponent<TextMeshProUGUI>().text = "Lives:" + lives.ToString();
+        HiScoreUI.GetComponent<TextMeshProUGUI>().text = "HiScore:" + HiScore.ToString();
+        GameOverText.SetActive(false);
+        QuitButtonUI.SetActive(false);
+
+
+    }
+
+
+
       public void GameOver() 
     {
 
@@ -78,7 +106,7 @@ public class GameManager : MonoBehaviour
         {
             Destroy(ballsInGame[i]);
         }
-
+        //Update Hiscore
         if(score > HiScore) 
         {
             HiScore = score;
@@ -86,12 +114,17 @@ public class GameManager : MonoBehaviour
 
         }
 
-        
+        //Show Retry Button
+        RetryButton.SetActive(true);
+        QuitButtonUI.SetActive(true);
+        GameOverText.SetActive(true);
 
 
         print("GameOver");
     
     }
+
+   
 
     public void UpdateScore() 
     {
@@ -100,6 +133,10 @@ public class GameManager : MonoBehaviour
         scoreUI.GetComponent<TextMeshProUGUI>().text = "Score:" + score.ToString();
 
     }
-
+     public void QuitGame() 
+    {
+        
+    
+    }
 
     }
