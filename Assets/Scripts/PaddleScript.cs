@@ -1,14 +1,17 @@
+using TMPro;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class PaddleScript : MonoBehaviour
 {
     public float BounceForce = 35f;
-    public GameManager GM;
+
+    public GameManager GMan;
 
 
     private void Awake()
     {
-        GM = Camera.main.GetComponent<GameManager>();
+        
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -29,10 +32,20 @@ public class PaddleScript : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Ball"))
         {
+            other.gameObject.GetComponent<Rigidbody2D>().linearVelocity = Vector2.zero;
+            other.gameObject.GetComponent<Rigidbody2D>().AddForce(transform.up * BounceForce);
+           
+            GMan.UpdateScore();
 
-            other.gameObject.GetComponent<Rigidbody2D>().AddForce(Vector2.up * BounceForce);
-            GM.score += 100;
+            if (GMan.newBallScore >= 500)
+            {
+                GMan.SpawnBall();
+                GMan.newBallScore = 0;
+            }
+
         }
+
+        
     }
 }
 

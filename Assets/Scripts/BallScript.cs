@@ -7,7 +7,7 @@ public class BallScript : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        GM = Camera.main.GetComponent<GameManager>();
+        GM = GameObject.Find("GameManagerObject").GetComponent<GameManager>();
     }
 
     // Update is called once per frame
@@ -16,16 +16,20 @@ public class BallScript : MonoBehaviour
         
     }
 
-    private void OnCollisionEnter2D(Collision2D other)
+    private void OnCollisionEnter2D(Collision2D other) 
     {
-        if (other.gameObject.name == "Ground") 
+        if (other.gameObject.CompareTag("Floor")) 
         {
-
-            GM.lives -= 1;
+            GM.LoseLife();
             Destroy(gameObject);
         
+        
         }
+
+
+    
     }
+    
 
 }
 
